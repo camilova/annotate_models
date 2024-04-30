@@ -834,7 +834,7 @@ module AnnotateModels
         end.max || 0
         max_size += 2
       else
-        max_size = cols.map(&:name).map(&:size).max
+        max_size = cols.map(&:name).map(&:size).max || 0
       end
       max_size += options[:format_rdoc] ? 5 : 1
 
