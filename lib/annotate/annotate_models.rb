@@ -336,6 +336,10 @@ module AnnotateModels
 
       max_size = foreign_keys.map(&format_name).map(&:size).max + 1
       foreign_keys.sort_by {|fk| [format_name.call(fk), fk.column]}.each do |fk|
+        if options[:ignore_foreign_keys]
+          next if fk.name.match?(options[:ignore_foreign_keys])
+        end
+        
         ref_info = "#{fk.column} => #{fk.to_table}.#{fk.primary_key}"
         constraints_info = ''
         constraints_info += "ON DELETE => #{fk.on_delete} " if fk.on_delete
